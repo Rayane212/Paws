@@ -3,7 +3,7 @@ import { Copy, Check, Rocket, TrendingUp, Users } from 'lucide-react';
 
 const DonationSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
-  const fullAddress = 'Ap8bBDSrYgVaaLA2uKkeqcEKr3Gjf8TNqXgSTAzFPUMP'; // Replace with actual contract address
+  const fullAddress = '7UbVw3Y3tpaGBohPbr8ahUtGXMe8c71T6fAeAu82pump'; // Replace with actual contract address
   const displayAddress = `${fullAddress.slice(0, 6)}...${fullAddress.slice(-4)}`;
 
   const copyToClipboard = () => {
@@ -83,7 +83,7 @@ const DonationSection: React.FC = () => {
           {/* Call to Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="https://pump.fun" // Modify this link to the actual purchase link
+              href="https://pump.fun/7UbVw3Y3tpaGBohPbr8ahUtGXMe8c71T6fAeAu82pump" // Modify this link to the actual purchase link
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all hover:transform hover:scale-105"

@@ -3,10 +3,11 @@ import { Copy, Check, Rocket, TrendingUp, Users } from 'lucide-react';
 
 const DonationSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
-  const contractAddress = '0xPAWS...COIN88';
+  const fullAddress = 'Ap8bBDSrYgVaaLA2uKkeqcEKr3Gjf8TNqXgSTAzFPUMP';
+  const displayAddress = `${fullAddress.slice(0, 6)}...${fullAddress.slice(-4)}`;
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(contractAddress);
+    navigator.clipboard.writeText(fullAddress);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -39,7 +40,7 @@ const DonationSection: React.FC = () => {
               onClick={copyToClipboard}
               className="wallet-address flex items-center justify-center space-x-2 bg-white border-2 border-amber-200 rounded-lg py-4 px-6 max-w-md mx-auto cursor-pointer"
             >
-              <span className="text-xl font-mono">{contractAddress}</span>
+              <span className="text-xl font-mono">{displayAddress}</span>
               {copied ? (
                 <Check className="h-5 w-5 text-green-500" />
               ) : (

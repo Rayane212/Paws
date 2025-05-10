@@ -1,15 +1,44 @@
-import React, { useState } from 'react';
-import { Copy, Check, Rocket, TrendingUp, Users } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Copy, Check, Rocket, TrendingUp, Users, Timer } from 'lucide-react';
 
 const DonationSection: React.FC = () => {
-  const [copied, setCopied] = useState(false);
-  const fullAddress = 'Ap8bBDSrYgVaaLA2uKkeqcEKr3Gjf8TNqXgSTAzFPUMP';
-  const displayAddress = `${fullAddress.slice(0, 6)}...${fullAddress.slice(-4)}`;
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(fullAddress);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  // Countdown timer state
+  const [timeLeft, setTimeLeft] = useState({
+    days: 7,
+    hours: 23,
+    minutes: 59,
+    seconds: 59
+  });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 };
+        } else if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        } else if (prev.hours > 0) {
+          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        } else if (prev.days > 0) {
+          return { ...prev, days: prev.days - 1, hours: 23, minutes: 59, seconds: 59 };
+        }
+        return prev;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      setSubmitted(true);
+      setEmail('');
+      setTimeout(() => setSubmitted(false), 3000);
+    }
   };
 
   return (
@@ -20,8 +49,27 @@ const DonationSection: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block bg-amber-200 text-amber-800 px-4 py-1 rounded-full text-sm font-semibold mb-4">
-            🚀 Now accepting $PAWSCOIN
+            🚀 Whitelist Registration Open
           </div>
+          
+          {/* Countdown Timer */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold mb-6 text-gray-800">Launch Countdown</h2>
+            <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
+              {[
+                { label: 'Days', value: timeLeft.days },
+                { label: 'Hours', value: timeLeft.hours },
+                { label: 'Minutes', value: timeLeft.minutes },
+                { label: 'Seconds', value: timeLeft.seconds }
+              ].map(({ label, value }) => (
+                <div key={label} className="bg-white rounded-lg p-4 shadow-lg">
+                  <div className="text-3xl font-bold text-amber-600">{value}</div>
+                  <div className="text-gray-600">{label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-900">
             JOIN THE $PAWSCOIN REVOLUTION
           </h2>
@@ -33,22 +81,28 @@ const DonationSection: React.FC = () => {
             of protecting cats and fighting abuse. Join our growing community of cat lovers and crypto enthusiasts.
           </p>
 
-          {/* Contract Address */}
-          <div className="mb-12">
-            <p className="text-sm text-gray-600 mb-2">$PAWSCOIN Contract Address</p>
-            <div 
-              onClick={copyToClipboard}
-              className="wallet-address flex items-center justify-center space-x-2 bg-white border-2 border-amber-200 rounded-lg py-4 px-6 max-w-md mx-auto cursor-pointer"
-            >
-              <span className="text-xl font-mono">{displayAddress}</span>
-              {copied ? (
-                <Check className="h-5 w-5 text-green-500" />
-              ) : (
-                <Copy className="h-5 w-5 text-amber-700" />
-              )}
-            </div>
-            {copied && (
-              <p className="text-green-600 mt-2 text-sm">Contract address copied!</p>
+          {/* Whitelist Form */}
+          <div className="bg-white rounded-xl shadow-lg p-8 mb-12">
+            <h3 className="text-2xl font-bold mb-4">Join the Whitelist</h3>
+            <p className="text-gray-600 mb-6">Get early access and exclusive benefits</p>
+            <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 mb-4"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg font-bold transition-all hover:transform hover:scale-105"
+              >
+                Reserve Your Spot
+              </button>
+            </form>
+            {submitted && (
+              <p className="text-green-600 mt-4">You're on the list! 🎉</p>
             )}
           </div>
 
@@ -80,22 +134,23 @@ const DonationSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Call to Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a 
-              href="https://pump.fun" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all hover:transform hover:scale-105"
-            >
-              Buy on Pump.fun
-            </a>
-            <a 
-              href="#" 
-              className="bg-white border-2 border-amber-600 text-amber-600 hover:bg-amber-50 px-8 py-4 rounded-lg font-bold text-lg transition-all hover:transform hover:scale-105"
-            >
-              Join Community
-            </a>
+          {/* Social Proof */}
+          <div className="bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl p-8 text-white">
+            <h3 className="text-2xl font-bold mb-4">Join Our Growing Community</h3>
+            <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
+              <div>
+                <div className="text-3xl font-bold">10K+</div>
+                <div className="text-amber-100">Telegram Members</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold">5K+</div>
+                <div className="text-amber-100">Twitter Followers</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold">8K+</div>
+                <div className="text-amber-100">Whitelist Sign-ups</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

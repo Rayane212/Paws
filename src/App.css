@@ -11,7 +11,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-section {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                    url('https://images.pexels.com/photos/320014/pexels-photo-320014.jpeg');
+                    url('https://images.pexels.com/photos/1440387/pexels-photo-1440387.jpeg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

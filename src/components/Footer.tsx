@@ -19,17 +19,8 @@ const Footer: React.FC = () => {
             </div>
             
             <div className="flex space-x-6">
-              <a href="#" className="hover:text-amber-400 transition-colors" aria-label="Instagram">
-                <Instagram className="h-6 w-6" />
-              </a>
-              <a href="#" className="hover:text-amber-400 transition-colors" aria-label="Twitter">
+              <a href="https://x.com/KiriKouzzz" className="hover:text-amber-400 transition-colors" aria-label="Twitter">
                 <Twitter className="h-6 w-6" />
-              </a>
-              <a href="#" className="hover:text-amber-400 transition-colors" aria-label="Facebook">
-                <Facebook className="h-6 w-6" />
-              </a>
-              <a href="#" className="hover:text-amber-400 transition-colors" aria-label="Email">
-                <Mail className="h-6 w-6" />
               </a>
             </div>
           </div>
